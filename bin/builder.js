@@ -72,6 +72,7 @@ var baseTransports = {
       , 'vendor/web-socket-js/web_socket.js'
     ] 
   , 'htmlfile': ['transports/xhr.js', 'transports/htmlfile.js']
+  , 'event-source': ['transports/xhr.js', 'transports/event-source.js']
   /* FIXME: re-enable me once we have multi-part support
   , 'xhr-multipart': ['transports/xhr.js', 'transports/xhr-multipart.js'] */
   , 'xhr-polling': ['transports/xhr.js', 'transports/xhr-polling.js']

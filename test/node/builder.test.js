@@ -24,24 +24,33 @@ module.exports = {
   },
 
   'production build LOC': function () {
-    builder(function (err, result) {
-      should.strictEqual(err, null)
+    builder({ minify: false }, function (err, result) {
+      should.strictEqual(err, null);
+      var development = Buffer.byteLength(result);
 
-      var lines = result.split('\n');
-      lines.length.should().be.below(5);
-      lines[0].should().match(/production/gi);
-      Buffer.byteLength(result).should().be.below(41000);
+      builder(function (err, result) {
+        should.strictEqual(err, null)
+
+        var lines = result.split('\n');
+        lines.length.should().be.below(5);
+        lines[0].should().match(/production/gi);
+        Buffer.byteLength(result).should().be.below(development);
+      });
     });
   },
 
   'development build LOC': function () {
-    builder({ minify: false }, function (err, result) {
-      should.strictEqual(err, null)
+    builder(function (err, result) {
+      var production = Buffer.byteLength(result);
 
-      var lines = result.split('\n');
-      lines.length.should().be.above(5);
-      lines[0].should().match(/development/gi);
-      Buffer.byteLength(result).should().be.above(35000);
+      builder({ minify: false }, function (err, result) {
+        should.strictEqual(err, null)
+
+        var lines = result.split('\n');
+        lines.length.should().be.above(5);
+        lines[0].should().match(/development/gi);
+        Buffer.byteLength(result).should().be.above(production);
+      });
     });
   },
 
